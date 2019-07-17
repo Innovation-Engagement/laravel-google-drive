@@ -63,8 +63,9 @@ class LoginController extends Controller
                 'email' => $auth_user->email
             ],
             [
-                'refresh_token' => $auth_user->token,
-                'name'  =>  $auth_user->name
+                'refresh_token' => $auth_user->refreshToken,
+                'name'  =>  $auth_user->name,
+                'google_token'=>$auth_user->token
             ]
         );
 
