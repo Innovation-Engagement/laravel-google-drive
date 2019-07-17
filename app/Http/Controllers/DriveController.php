@@ -18,6 +18,10 @@ class DriveController extends Controller
     public function __construct(Google_Client $client)
     {
         $this->middleware(function ($request, $next) use ($client) {
+
+            if ($client->isAccessTokenExpired())
+                dd('expired');
+
             $client->refreshToken(Auth::user()->refresh_token);
             $this->drive = new Google_Service_Drive($client);
             return $next($request);
