@@ -110,4 +110,10 @@ class DriveController extends Controller
             'fields' => 'id'));
         return $folder->id;
     }
+
+    function getFile(){
+
+        $this->drive->files('1H6BTTBw79TiQAyR3YzRrncZyrU2S4VIFcV0KqpvgRcY');
+
+    }
 }
