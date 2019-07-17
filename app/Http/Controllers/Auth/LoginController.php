@@ -57,7 +57,6 @@ class LoginController extends Controller
     {
         $auth_user = Socialite::driver('google')->user();
 
-        dd($auth_user);
         $user = User::updateOrCreate(
             [
                 'email' => $auth_user->email
