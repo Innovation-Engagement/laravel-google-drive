@@ -36,7 +36,7 @@ class DriveController extends Controller
 
     public function about(){
 
-        $a = $this->drive->about->get(['id']);
+        $a = $this->drive->about->get(['parameters'=>'*']);
         dd($a);
 
     }
