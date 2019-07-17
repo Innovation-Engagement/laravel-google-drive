@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 class DriveController extends Controller
 {
     private $drive;
+
     public function __construct(Google_Client $client)
     {
         $this->middleware(function ($request, $next) use ($client) {
@@ -23,27 +24,31 @@ class DriveController extends Controller
         });
     }
 
-    public function getDrive(){
+    public function getDrive()
+    {
         $this->ListFolders('root');
     }
 
-    public function getChanges(){
+    public function getChanges()
+    {
 
         $a = $this->drive->changes->getStartPageToken();
         dd($a);
 
     }
 
-    public function about(){
+    public function about()
+    {
 
-        $a = $this->drive->about->get(['fields'=>'*']);
+        $a = $this->drive->about->get(['fields' => '*']);
         dd($a);
 
     }
 
-    public function ListFolders($id){
+    public function ListFolders($id)
+    {
 
-        $query = "mimeType='application/vnd.google-apps.folder' and '".$id."' in parents and trashed=false";
+        $query = "mimeType='application/vnd.google-apps.folder' and '" . $id . "' in parents and trashed=false";
 
         $optParams = [
             'fields' => 'files(id, name)',
@@ -62,26 +67,29 @@ class DriveController extends Controller
         }
     }
 
-    function uploadFile(Request $request){
-        if($request->isMethod('GET')){
+    function uploadFile(Request $request)
+    {
+        if ($request->isMethod('GET')) {
             return view('upload');
-        }else{
+        } else {
             $this->createFile($request->file('file'));
         }
     }
 
-    function createStorageFile($storage_path){
+    function createStorageFile($storage_path)
+    {
         $this->createFile($storage_path);
     }
 
-    function createFile($file, $parent_id = null){
+    function createFile($file, $parent_id = null)
+    {
         $name = gettype($file) === 'object' ? $file->getClientOriginalName() : $file;
         $fileMetadata = new Google_Service_Drive_DriveFile([
             'name' => $name,
             'parent' => $parent_id ? $parent_id : 'root'
         ]);
 
-        $content = gettype($file) === 'object' ?  File::get($file) : Storage::get($file);
+        $content = gettype($file) === 'object' ? File::get($file) : Storage::get($file);
         $mimeType = gettype($file) === 'object' ? File::mimeType($file) : Storage::mimeType($file);
 
         $file = $this->drive->files->create($fileMetadata, [
@@ -94,7 +102,8 @@ class DriveController extends Controller
         dd($file->id);
     }
 
-    function deleteFileOrFolder($id){
+    function deleteFileOrFolder($id)
+    {
         try {
             $this->drive->files->delete($id);
         } catch (Exception $e) {
@@ -102,7 +111,8 @@ class DriveController extends Controller
         }
     }
 
-    function createFolder($folder_name){
+    function createFolder($folder_name)
+    {
         $folder_meta = new Google_Service_Drive_DriveFile(array(
             'name' => $folder_name,
             'mimeType' => 'application/vnd.google-apps.folder'));
@@ -111,9 +121,12 @@ class DriveController extends Controller
         return $folder->id;
     }
 
-    function getFile(){
+    function getFile()
+    {
 
-        $this->drive->files->get('1H6BTTBw79TiQAyR3YzRrncZyrU2S4VIFcV0KqpvgRcY');
+        $file = $this->drive->files->get('1H6BTTBw79TiQAyR3YzRrncZyrU2S4VIFcV0KqpvgRcY');
+
+        dd($file);
 
     }
 }
