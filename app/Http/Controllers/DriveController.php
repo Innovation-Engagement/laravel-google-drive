@@ -29,9 +29,9 @@ class DriveController extends Controller
 
     public function getChanges(){
 
-        $a = $this->drive->changes;
-
+        $a = $this->drive->changes->getStartPageToken();
         dd($a);
+
     }
 
     public function ListFolders($id){
