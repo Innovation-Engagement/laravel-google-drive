@@ -27,6 +27,13 @@ class DriveController extends Controller
         $this->ListFolders('root');
     }
 
+    public function getChanges(){
+
+        $a = $this->drive->changes;
+
+        dd($a);
+    }
+
     public function ListFolders($id){
 
         $query = "mimeType='application/vnd.google-apps.folder' and '".$id."' in parents and trashed=false";
