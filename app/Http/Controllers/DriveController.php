@@ -139,7 +139,9 @@ class DriveController extends Controller
     public function listImages()
     {
 
-        $query = "mimeType='image/jpeg'";
+
+        $query = 'mimeType=\'application/vnd.google-apps.folder';
+//        $query = "mimeType='image/jpeg'";
 
         $optParams = [
             'fields' => 'files(id, name)',
@@ -151,9 +153,29 @@ class DriveController extends Controller
         if (count($results->getFiles()) == 0) {
             print "No files found.\n";
         } else {
-            print "Files:\n";
+//            print "Files:\n";
             foreach ($results->getFiles() as $file) {
-                dump($file->getName(), $file->getID());
+
+                $subQuery = 'mimeType=\'image/jpeg';
+//        $query = "mimeType='image/jpeg'";
+
+                $subOptParams = [
+                    'fields' => 'files(id, name)',
+                    'q' => $subQuery
+                ];
+
+                $subResults = $this->drive->files->listFiles($subOptParams);
+
+                if (count($results->getFiles()) == 0) {
+                    print "No files found.\n";}
+                else{
+
+                    foreach ($results->getFiles() as $subFile){
+
+                        dump($subFile->getName(), $subFile->getID());
+                    }
+                }
+
             }
         }
     }
