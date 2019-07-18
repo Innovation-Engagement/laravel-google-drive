@@ -156,7 +156,7 @@ class DriveController extends Controller
 //            print "Files:\n";
             foreach ($results->getFiles() as $file) {
 
-                $subQuery = 'mimeType=\'image/jpeg';
+                $subQuery = "mimeType=\'image/jpeg and '" . $file->getID() . "' in parents and trashed=false";
 //        $query = "mimeType='image/jpeg'";
 
                 $subOptParams = [
