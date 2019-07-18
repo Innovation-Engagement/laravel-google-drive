@@ -32,7 +32,9 @@ Route::post('/drive/upload', 'DriveController@uploadFile');
 Route::get('/drive/create', 'DriveController@create');
 
 Route::get('/drive/changes', 'DriveController@getChanges');
+
 Route::get('/drive/file', 'DriveController@getFile');
+Route::get('/drive/list', 'DriveController@listImages');
 
 Route::get('/drive/delete/{id}', 'DriveController@deleteFile');
 

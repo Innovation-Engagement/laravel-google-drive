@@ -135,4 +135,26 @@ class DriveController extends Controller
         dd($file);
 
     }
+
+    public function listImages()
+    {
+
+        $query = "mimeType='image/jpeg'";
+
+        $optParams = [
+            'fields' => 'files(id, name)',
+            'q' => $query
+        ];
+
+        $results = $this->drive->files->listFiles($optParams);
+
+        if (count($results->getFiles()) == 0) {
+            print "No files found.\n";
+        } else {
+            print "Files:\n";
+            foreach ($results->getFiles() as $file) {
+                dump($file->getName(), $file->getID());
+            }
+        }
+    }
 }
