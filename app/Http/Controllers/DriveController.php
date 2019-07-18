@@ -130,7 +130,7 @@ class DriveController extends Controller
     function getFile()
     {
 
-        $file = $this->drive->files->get('13X6LmOBAeI3C-WnBvQkQfkBTvBzZCiNpwg', ['fields' => 'id, webViewLink']);
+        $file = $this->drive->files->get('13X6LmOBAeI3C-WnBvQkQfkBTvBzZCiNpwg', ['fields' => 'id, webViewLink, thumbnailLink']);
 
         dd($file);
 
