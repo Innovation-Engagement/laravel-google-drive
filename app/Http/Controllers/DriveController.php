@@ -130,7 +130,7 @@ class DriveController extends Controller
     function getFile()
     {
 
-        $file = $this->drive->files->get('1H6BTTBw79TiQAyR3YzRrncZyrU2S4VIFcV0KqpvgRcY');
+        $file = $this->drive->files->get('13X6LmOBAeI3C-WnBvQkQfkBTvBzZCiNpwg');
 
         dd($file);
 
