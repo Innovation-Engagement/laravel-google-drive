@@ -68,6 +68,7 @@ class DriveController extends Controller
         } else {
             print "Files:\n";
             foreach ($results->getFiles() as $file) {
+                Folder::updateOrCreate(['name' => $file->getName(), 'folder_id' => $file->getID()]);
                 dump($file->getName(), $file->getID());
             }
         }
@@ -135,48 +136,5 @@ class DriveController extends Controller
         dd($file);
 
     }
-
-    public function listImages()
-    {
-
-
-        $query = 'mimeType=\'application/vnd.google-apps.folder';
-//        $query = "mimeType='image/jpeg'";
-
-        $optParams = [
-            'fields' => 'files(id, name)',
-            'q' => $query
-        ];
-
-        $results = $this->drive->files->listFiles($optParams);
-
-        if (count($results->getFiles()) == 0) {
-            print "No files found.\n";
-        } else {
-//            print "Files:\n";
-            foreach ($results->getFiles() as $file) {
-
-                $subQuery = "mimeType=\'image/jpeg and '" . $file->getID() . "' in parents and trashed=false";
-//        $query = "mimeType='image/jpeg'";
-
-                $subOptParams = [
-                    'fields' => 'files(id, name)',
-                    'q' => $subQuery
-                ];
-
-                $subResults = $this->drive->files->listFiles($subOptParams);
-
-                if (count($results->getFiles()) == 0) {
-                    print "No files found.\n";}
-                else{
-
-                    foreach ($results->getFiles() as $subFile){
-
-                        dump($subFile->getName(), $subFile->getID());
-                    }
-                }
-
-            }
-        }
-    }
+    
 }
